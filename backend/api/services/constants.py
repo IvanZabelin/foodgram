@@ -3,6 +3,7 @@ MAX_VALUE = 100
 
 ERROR_MESSAGES = {
     "duplicate_ingredient": "Ингредиенты должны быть уникальными!",
+    "duplicate_tags": "Теги должны быть уникальными!",
     "missing_tags": "Рецепт не может быть без тега!",
     "missing_ingredients": "Рецепт не может быть без ингредиентов!",
     "self_subscribe": "Нельзя подписаться на самого себя!",

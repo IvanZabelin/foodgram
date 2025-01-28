@@ -1,0 +1,47 @@
+version: '3'
+
+volumes:
+  static:
+  media:
+  pg_data:
+
+services:
+  db:
+    container_name: food-db
+    image: postgres:13
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: always
+
+  frontend:
+    container_name: food-front
+    image: ${FRONTEND_IMAGE}
+    volumes:
+      - static:/app/frontend_static
+    command: cp -r /app/build/. /app/frontend_static
+
+  backend:
+    container_name: food-back
+    image: ${BACKEND_IMAGE}
+    env_file: .env
+    volumes:
+      - static:/app/web
+      - media:/app/media
+    depends_on:
+      - frontend
+      - db
+    command: sh -c "sleep 5 && ./up.sh"
+    restart: always
+
+  nginx:
+    container_name: food-gateway
+    image: ${GATEWAY_IMAGE}
+    env_file: .env
+    volumes:
+      - static:/web
+      - media:/web/media
+    ports:
+      - 8080:80
+    restart: always
+    

@@ -4,7 +4,7 @@ from recipes.models import Ingredient, RecipeIngredient
 
 
 def check_recipe(request, obj, model):
-    """Проверка, находится ли рецепт в указанной модели у текущего пользователя."""
+    """Проверка, находится ли рецепт в указанной модели пользователя."""
     if not request or not request.user.is_authenticated:
         return False
     return model.objects.filter(user=request.user, recipe=obj).exists()

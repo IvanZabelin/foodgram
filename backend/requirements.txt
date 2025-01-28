@@ -1,1 +1,8 @@
-Django==3.2.*
+Django==3.2
+djangorestframework==3.14.0
+django-filter==23.2
+djoser==2.2.0
+gunicorn==20.1.0
+Pillow==11.1.0
+python-dotenv==1.0.0
+psycopg2-binary==2.9.3
