@@ -12,7 +12,7 @@ DEBUG = os.getenv("DEBUG", False) == "True"
 
 SECRET_KEY = os.getenv("SECRET_KEY", "key")
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1;localhost").split(";")
 
 
 INSTALLED_APPS = [
@@ -106,7 +106,6 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-
 STATIC_ROOT = BASE_DIR / "static"
 
 MEDIA_URL = "/media/"

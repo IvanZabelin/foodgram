@@ -8,7 +8,7 @@ def username_validator(value):
     if not re.fullmatch(regex, value):
         invalid_characters = sorted(set(re.findall(r"[^\w.@+-]", value)))
         raise ValidationError(
-            f"Недопустимые символы {', '.join(invalid_characters)} в username. "
+            f"Недопустимые символы {', '.join(invalid_characters)} в username."
             f"username может содержать только буквы, цифры и "
             f"знаки @, ., +, -, _.",
         )

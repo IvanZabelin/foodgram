@@ -16,14 +16,14 @@ services:
 
   frontend:
     container_name: food-front
-    image: ${FRONTEND_IMAGE}
+    image: ivanzabelin/foodgram-front
     volumes:
       - static:/app/frontend_static
     command: cp -r /app/build/. /app/frontend_static
 
   backend:
     container_name: food-back
-    image: ${BACKEND_IMAGE}
+    image: ivanzabelin/foodgram-back:v1
     env_file: .env
     volumes:
       - static:/app/web
@@ -36,7 +36,7 @@ services:
 
   nginx:
     container_name: food-gateway
-    image: ${GATEWAY_IMAGE}
+    image: ivanzabelin/foodgram-gateway
     env_file: .env
     volumes:
       - static:/web

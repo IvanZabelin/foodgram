@@ -226,7 +226,7 @@ class Favorite(models.Model):
         verbose_name="Дата добавления",
         auto_now_add=True,
     )
-    
+
     class Meta:
         verbose_name = "Избранное"
         verbose_name_plural = "Избранное"
