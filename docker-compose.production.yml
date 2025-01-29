@@ -23,7 +23,7 @@ services:
 
   backend:
     container_name: food-back
-    image: ivanzabelin/foodgram-back:v1
+    image: ivanzabelin/foodgram-back
     env_file: .env
     volumes:
       - static:/app/web
