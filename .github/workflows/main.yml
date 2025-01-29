@@ -44,7 +44,7 @@ jobs:
         with:
           context: ./backend/
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/food_back:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/foodgram_back:latest
 
   build_frontend_and_push_to_docker_hub:
     name: Push frontend Docker image to DockerHub
@@ -64,7 +64,7 @@ jobs:
         with:
           context: ./frontend/
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/food_front:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/foodgram_front:latest
 
   build_gateway_and_push_to_docker_hub:
     name: Push gateway Docker image to DockerHub
@@ -84,7 +84,7 @@ jobs:
         with:
           context: ./gateway/
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/food_gateway:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/foodgram_gateway:latest
 
   deploy:
     if: github.ref == 'refs/heads/main'
