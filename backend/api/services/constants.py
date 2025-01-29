@@ -1,5 +1,5 @@
 MIN_VALUE = 1
-MAX_VALUE = 100
+MAX_VALUE = 100000
 
 ERROR_MESSAGES = {
     "duplicate_ingredient": "Ингредиенты должны быть уникальными!",
