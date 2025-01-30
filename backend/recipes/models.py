@@ -1,3 +1,5 @@
+from enum import IntEnum
+
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -5,33 +7,33 @@ from django.db import models
 from .validators import username_validator, color_validator
 
 
-class LENGTH:
-    l_150 = 150
-    l_200 = 200
-    l_254 = 254
-    l_7 = 7
+class FieldLength(IntEnum):
+    SHORT = 7
+    MEDIUM = 150
+    LONG = 200
+    MAX = 254
 
 
 class User(AbstractUser):
     """Модель пользователя."""
     username = models.CharField(
         verbose_name="username",
-        max_length=LENGTH.l_150,
+        max_length=FieldLength.MEDIUM,
         unique=True,
         validators=[username_validator],
     )
     email = models.EmailField(
         verbose_name="email",
-        max_length=LENGTH.l_254,
+        max_length=FieldLength.MAX,
         unique=True,
     )
     first_name = models.CharField(
         verbose_name="Имя",
-        max_length=LENGTH.l_150,
+        max_length=FieldLength.MEDIUM,
     )
     last_name = models.CharField(
         verbose_name="Фамилия",
-        max_length=LENGTH.l_150,
+        max_length=FieldLength.MEDIUM,
     )
 
     class Meta:
@@ -77,18 +79,18 @@ class Tag(models.Model):
     """Модель тегов."""
     name = models.CharField(
         verbose_name="Название",
-        max_length=LENGTH.l_200,
+        max_length=FieldLength.LONG,
         unique=True,
     )
     color = models.CharField(
         verbose_name="Цвет",
-        max_length=LENGTH.l_7,
+        max_length=FieldLength.SHORT,
         unique=True,
         validators=[color_validator],
     )
     slug = models.SlugField(
         verbose_name="Слаг",
-        max_length=LENGTH.l_200,
+        max_length=FieldLength.LONG,
         unique=True,
         db_index=True,
     )
@@ -106,12 +108,12 @@ class Ingredient(models.Model):
     """Модель ингредиентов."""
     name = models.CharField(
         verbose_name="Название",
-        max_length=LENGTH.l_200,
+        max_length=FieldLength.LONG,
         db_index=True,
     )
     measurement_unit = models.CharField(
         verbose_name="Единица измерения",
-        max_length=LENGTH.l_200,
+        max_length=FieldLength.LONG,
     )
 
     class Meta:
@@ -127,7 +129,7 @@ class Recipe(models.Model):
     """Модель рецептов."""
     name = models.CharField(
         verbose_name="Название",
-        max_length=LENGTH.l_200,
+        max_length=FieldLength.LONG,
     )
     text = models.TextField(
         verbose_name="Описание",
