@@ -1,6 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from django.urls import reverse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from djoser.views import UserViewSet as DjoserUserViewSet
 from rest_framework import status, mixins, viewsets
 from rest_framework.decorators import action
