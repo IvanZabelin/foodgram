@@ -5,6 +5,7 @@ python manage.py collectstatic
 cp -r /app/static/. web/static
 
 # Выполнить миграции
+python manage.py makemigrations
 python manage.py migrate
 
 # Создать суперпользователя

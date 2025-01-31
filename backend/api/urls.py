@@ -11,7 +11,7 @@ from .views import (
 )
 
 router = DefaultRouter()
-router.register(r"users", CustomDjoserUserViewSet, basename="me")
+router.register(r"users", CustomDjoserUserViewSet, basename="users")
 router.register(r"tags", TagViewSet, basename="tags")
 router.register(r"ingredients", IngredientViewSet, basename="ingredients")
 router.register(r"recipes", RecipeViewSet, basename="recipes")

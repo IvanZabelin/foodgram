@@ -51,10 +51,20 @@ class UserGetSerializer(UserSerializer):
             "first_name",
             "last_name",
             "is_subscribed",
+            "avatar",
         )
 
     def get_is_subscribed(self, obj):
         return check_subscribe(self.context.get("request"), obj)
+
+
+class AvatarSerializer(serializers.ModelSerializer):
+    """Сериализатор для аватара пользователя."""
+    avatar = Base64ImageField(required=True, allow_null=False)
+
+    class Meta:
+        model = User
+        fields = ('avatar',)
 
 
 class UserSubscribeSerializer(serializers.ModelSerializer):
@@ -102,6 +112,7 @@ class UserSubscribeRepresentSerializer(UserGetSerializer):
             "is_subscribed",
             "recipes",
             "recipes_count",
+            "avatar",
         )
         read_only_fields = (
             "email",
@@ -111,6 +122,7 @@ class UserSubscribeRepresentSerializer(UserGetSerializer):
             "is_subscribed",
             "recipes",
             "recipes_count",
+            "avatar",
         )
 
     def get_recipes(self, obj):
@@ -134,7 +146,11 @@ class TagGetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = "__all__"
+        fields = (
+            "id",
+            "name",
+            "slug",
+        )
 
 
 class IngredientSerializer(serializers.ModelSerializer):

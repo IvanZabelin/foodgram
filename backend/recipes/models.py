@@ -35,6 +35,12 @@ class User(AbstractUser):
         verbose_name="Фамилия",
         max_length=FieldLength.MEDIUM,
     )
+    avatar = models.ImageField(
+        null=True,
+        upload_to='users/avatars/',
+        default=None,
+        verbose_name='Аватар'
+    )
 
     class Meta:
         verbose_name = "Пользователь"
