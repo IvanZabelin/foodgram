@@ -165,7 +165,6 @@ class RecipeViewSet(ModelViewSet):
     )
     def shopping_cart(self, request, pk):
         """Добавление или удаление рецепта в список покупок."""
-        recipe = get_object_or_404(Recipe, pk=pk)
         recipe_processor = RecipeProcessor()
         err_msg = "Рецепт отсутствует в списке покупок."
         return recipe_processor.execute(
