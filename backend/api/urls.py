@@ -8,6 +8,7 @@ from .views import (
     RecipeViewSet,
     UserSubscriptionsViewSet,
     UserSubscribeView,
+    short_link_view,
 )
 
 router = DefaultRouter()
@@ -27,4 +28,10 @@ urlpatterns = [
     ),
     path("", include(router.urls)),
     path("auth/", include("djoser.urls.authtoken")),
+    path(
+        'recipes/<int:pk>/get-link/',
+        RecipeViewSet.as_view({'get': 'get_link'}),
+        name='recipe-get-link',
+    ),
+    path('short-link/<int:id>/', short_link_view, name='short_link'),
 ]

@@ -34,12 +34,7 @@ class RecipeProcessor:
     def execute(self, serializer_name, model, request, pk, err_msg):
         """Проверить тип и обработать запрос."""
         if request.method == "POST":
-            try:
-                recipe = Recipe.objects.get(id=pk)
-            except Recipe.DoesNotExist:
-                raise ValidationError(
-                    "Рецепт с указанным идентификатором не существует."
-                )
+            recipe = get_object_or_404(Recipe, id=pk)
             return self.__add_recipe(serializer_name, request, recipe)
 
         if request.method == "DELETE":

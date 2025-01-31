@@ -1,5 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from django.urls import reverse
+from django.shortcuts import get_object_or_404, redirect
 from djoser.views import UserViewSet as DjoserUserViewSet
 from rest_framework import status, mixins, viewsets
 from rest_framework.decorators import action
@@ -182,8 +183,17 @@ class RecipeViewSet(ModelViewSet):
     @action(detail=True, methods=['get'], url_path='get-link')
     def get_link(self, request, pk=None):
         """Генерация короткой ссылки на рецепт."""
-        recipe = self.get_object()
+        recipe = get_object_or_404(Recipe, pk=pk)
         short_url = request.build_absolute_uri(
             reverse('short_link', args=[recipe.pk])
         )
         return Response({'short-link': short_url}, status=status.HTTP_200_OK)
+
+
+def short_link_view(request, id):
+    """Перенаправление на рецепт по короткой ссылке."""
+    try:
+        recipe = Recipe.objects.get(pk=id)
+        return redirect('recipe_detail', pk=recipe.pk)
+    except Recipe.DoesNotExist:
+        return redirect('404_page')
