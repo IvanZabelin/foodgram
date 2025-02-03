@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from .validators import username_validator, color_validator
+from .validators import username_validator
 
 
 class FieldLength(IntEnum):
@@ -16,16 +16,16 @@ class FieldLength(IntEnum):
 
 class User(AbstractUser):
     """Модель пользователя."""
+    email = models.EmailField(
+        verbose_name="email",
+        max_length=FieldLength.MAX,
+        unique=True,
+    )
     username = models.CharField(
         verbose_name="username",
         max_length=FieldLength.MEDIUM,
         unique=True,
         validators=[username_validator],
-    )
-    email = models.EmailField(
-        verbose_name="email",
-        max_length=FieldLength.MAX,
-        unique=True,
     )
     first_name = models.CharField(
         verbose_name="Имя",
@@ -41,6 +41,9 @@ class User(AbstractUser):
         default=None,
         verbose_name='Аватар'
     )
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
 
     class Meta:
         verbose_name = "Пользователь"
@@ -87,12 +90,6 @@ class Tag(models.Model):
         verbose_name="Название",
         max_length=FieldLength.LONG,
         unique=True,
-    )
-    color = models.CharField(
-        verbose_name="Цвет",
-        max_length=FieldLength.SHORT,
-        unique=True,
-        validators=[color_validator],
     )
     slug = models.SlugField(
         verbose_name="Слаг",

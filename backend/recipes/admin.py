@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django import forms
 from django.db import models
+from django.contrib.auth.models import Group
 
 from .models import (
     Favorite,
@@ -13,6 +14,9 @@ from .models import (
     Tag,
     User,
 )
+
+# Убираем стандартные группы пользователей
+admin.site.unregister(Group)
 
 
 @admin.register(User)
@@ -32,7 +36,7 @@ class SubscribeAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "color", "slug")
+    list_display = ("id", "name", "slug")
     search_fields = ("name", "slug")
     list_display_links = ("name",)
 

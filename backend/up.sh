@@ -15,15 +15,14 @@ User.objects.create_superuser('$ADMIN_USERNAME', '$ADMIN_EMAIL', '$ADMIN_PASSWOR
 # Создать теги
 add_tag() {
     name="$1"
-    color="$2"
-    slug="$3"
+    slug="$2"
 
     echo "from recipes.models import Tag;
-Tag.objects.create(name='$name', color='$color', slug='$slug')" | python manage.py shell
+Tag.objects.create(name='$name', slug='$slug')" | python manage.py shell
 }
-add_tag "Завтрак" "#FF0000" "breakfast"
-add_tag "Обед" "#00FF00" "lunch"
-add_tag "Ужин" "#0000FF" "dinner"
+add_tag "Завтрак" "breakfast"
+add_tag "Обед" "lunch"
+add_tag "Ужин" "dinner"
 
 # Запустить сервер
 gunicorn --bind 0.0.0.0:8000 foodgram.wsgi
