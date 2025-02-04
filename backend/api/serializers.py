@@ -164,23 +164,15 @@ class IngredientSerializer(serializers.ModelSerializer):
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     """Сериализатор ингредиентов в рецепте."""
 
-    name = serializers.StringRelatedField(
-        source="ingredient",
-        read_only=True,
-    )
-    measurement_unit = serializers.StringRelatedField(
-        source="ingredient.measurement_unit",
-        read_only=True,
+    id = serializers.IntegerField(source="ingredient.id", read_only=True)
+    name = serializers.CharField(source="ingredient.name", read_only=True)
+    measurement_unit = serializers.CharField(
+        source="ingredient.measurement_unit", read_only=True
     )
 
     class Meta:
         model = RecipeIngredient
-        fields = (
-            "id",
-            "name",
-            "measurement_unit",
-            "amount",
-        )
+        fields = ("id", "name", "measurement_unit", "amount")
 
 
 class RecipeGetSerializer(serializers.ModelSerializer):
@@ -290,12 +282,26 @@ class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
         return tags
 
     def create(self, validated_data):
+        """Создание рецепта с правильными ID ингредиентов."""
         request = self.context.get("request")
-        ingredients = validated_data.pop("recipe_ingredients")
+        ingredients_data = validated_data.pop("recipe_ingredients")
         tags = validated_data.pop("tags")
+
         recipe = Recipe.objects.create(author=request.user, **validated_data)
         recipe.tags.set(tags)
-        add_ingredients(ingredients, recipe)
+
+        # Создаем объекты связи с правильными ID
+        recipe_ingredients = [
+            RecipeIngredient(
+                recipe=recipe,
+                ingredient_id=item["id"],  # Используем переданный ID
+                amount=item["amount"]
+            )
+            for item in ingredients_data
+        ]
+
+        RecipeIngredient.objects.bulk_create(recipe_ingredients)
+
         return recipe
 
     def update(self, instance, validated_data):
