@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django import forms
 from django.db import models
+from django.apps import apps
 from django.contrib.auth.models import Group
 
 from .models import (
@@ -17,6 +18,15 @@ from .models import (
 
 # Убираем стандартные группы пользователей
 admin.site.unregister(Group)
+
+# Убираем отображение модели токенов (с обработкой исключения)
+Token = apps.get_model("authtoken", "Token")
+if Token:
+    try:
+        admin.site.unregister(Token)
+        print("Модель токена успешно отменена.")
+    except admin.sites.NotRegistered:
+        print("Модель токена не зарегистрирована.")
 
 
 @admin.register(User)
